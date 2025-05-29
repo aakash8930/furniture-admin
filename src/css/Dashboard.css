@@ -1,0 +1,63 @@
+/* File: src/css/Dashboard.css */
+.dashboard-container {
+    padding: 2rem;
+    background-color: #f7fafc;
+    min-height: 100vh;
+    }
+    
+    .dashboard-container h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    }
+    
+    .dashboard-container button {
+    padding: 0.5rem 1rem;
+    background-color: #e53e3e;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    }
+    
+    .dashboard-container button:hover {
+    background-color: #c53030;
+    }/* Navbar */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  .navbar__banner h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  .navbar__nav {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+  .navbar__link {
+    color: #4a5568;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .navbar__link--active {
+    color: #2c5282;
+    border-bottom: 2px solid #2c5282;
+    padding-bottom: 0.25rem;
+  }
+  .navbar__logout {
+    background: transparent;
+    border: none;
+    color: #e53e3e;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  .navbar__logout:hover {
+    color: #c53030;
+  }
