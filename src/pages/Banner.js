@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { fetchBanners, createBanner, deleteBanner } from '../api/BannerApi';
 import '../css/Banner.css';
+import AdminNavbar from './Navbar';
 
 export default function BannerPage() {
   const [banners, setBanners] = useState([]);
@@ -52,6 +53,8 @@ export default function BannerPage() {
   };
 
   return (
+    <>
+        <AdminNavbar Banners={BannerPage} />
     <div className="banner-page">
       <h2>Manage Banners</h2>
 
@@ -111,5 +114,6 @@ export default function BannerPage() {
         ))}
       </ul>
     </div>
+    </>
   );
 }

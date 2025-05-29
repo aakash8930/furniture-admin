@@ -5,6 +5,7 @@ import {
   fetchAllProducts,
   deleteProduct as apiDeleteProduct,
 } from '../api/ProductApi';
+import AdminNavbar from './Navbar';
 
 const ProductPage = () => {
   const [products, setProducts] = useState([]);
@@ -43,6 +44,8 @@ const ProductPage = () => {
   };
 
   return (
+    <>
+    <AdminNavbar Produtcs={ProductPage}/>
     <div style={{ padding: '1rem' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
         <button
@@ -87,6 +90,7 @@ const ProductPage = () => {
         {filtered.length === 0 && <p>No products found.</p>}
       </div>
     </div>
+    </>
   );
 };
 

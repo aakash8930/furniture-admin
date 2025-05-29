@@ -7,6 +7,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import ProductPage from './pages/Product';
 import AddProductPage from './pages/AddProductPage';
 import EditProductPage from './pages/EditProductPage';
+import CouponPage from './pages/Coupon';
 
 export default function App() {
   return (
@@ -29,6 +30,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <BannerPage />
+            </ProtectedRoute>
+          } 
+        />
+                <Route 
+          path="/admin/coupon" 
+          element={
+            <ProtectedRoute>
+              <CouponPage />
             </ProtectedRoute>
           } 
         />

@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fetchProductById, updateProduct } from '../api/ProductApi';
+import AdminNavbar from './Navbar';
+import ProductPage from './Product';
 
 const CATEGORY_OPTIONS = [
   "Living room furniture",
@@ -76,22 +78,28 @@ const EditProductPage = () => {
   };
 
   return (
-    <div style={{ padding: '1rem' }}>
+    <>
+    <AdminNavbar Products = {ProductPage}/>
+      <div style={{ padding: '1rem' }}>
       <h2>Edit Product</h2>
       <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '0.75rem', maxWidth: 400 }}>
+      <label>Name</label>
         <input name="name" value={form.name} onChange={handleChange} required />
-
+        <label>Category</label>
         <select name="category" value={form.category} onChange={handleChange} required>
           {CATEGORY_OPTIONS.map(opt => (
             <option key={opt} value={opt}>{opt}</option>
           ))}
         </select>
-
+        <label>Price</label>
         <input name="price" value={form.price} type="number" onChange={handleChange} required />
+        <label>Stock</label>
         <input name="stock" value={form.stock} type="number" onChange={handleChange} required />
+        <label>Discount</label>
         <input name="discount" value={form.discount} type="number" onChange={handleChange} />
+        <label>Description</label>
         <textarea name="details" value={form.details} onChange={handleChange} rows={3} />
-
+        <label>Images</label>
         <label>Image 1: <input name="image1" type="file" accept="image/*" onChange={handleChange} /></label>
         <label>Image 2: <input name="image2" type="file" accept="image/*" onChange={handleChange} /></label>
         <label>Image 3: <input name="image3" type="file" accept="image/*" onChange={handleChange} /></label>
@@ -101,6 +109,7 @@ const EditProductPage = () => {
         <button type="submit" style={{ padding: '0.5rem' }}>Save Changes</button>
       </form>
     </div>
+    </>
   );
 };
 

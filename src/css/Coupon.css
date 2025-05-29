@@ -1,0 +1,104 @@
+/* src/styles/coupon.css */
+
+.coupon-container {
+    padding: 24px;
+    max-width: 1200px;
+    margin: auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .coupon-heading {
+    font-size: 1.75rem;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+  
+  .coupon-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  
+  @media (min-width: 768px) {
+    .coupon-form {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  .coupon-input {
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+  
+  .coupon-input:focus {
+    outline: none;
+    border-color: #2563eb;
+  }
+  
+  .coupon-submit-btn {
+    background-color: #2563eb;
+    color: white;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .coupon-submit-btn:hover {
+    background-color: #1d4ed8;
+  }
+  
+  .coupon-table-heading {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  
+  .coupon-table-wrapper {
+    overflow-x: auto;
+  }
+  
+  .coupon-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border: 1px solid #d1d5db;
+  }
+  
+  .coupon-table th,
+  .coupon-table td {
+    border: 1px solid #d1d5db;
+    padding: 10px;
+    text-align: left;
+    font-size: 0.95rem;
+  }
+  
+  .coupon-table th {
+    background-color: #f3f4f6;
+    font-weight: 600;
+  }
+  
+  .delete-btn {
+    background-color: #ef4444;
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .delete-btn:hover {
+    background-color: #dc2626;
+  }
+  
+  .no-coupon-row {
+    text-align: center;
+    padding: 16px;
+    color: #6b7280;
+  }
+  
