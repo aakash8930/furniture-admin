@@ -1,9 +1,7 @@
 - v 1.0
-<<<<<<< HEAD
 + Products
 + Banner
 
-=======
 - Products
 - Banner
 
@@ -17,10 +15,11 @@ Update the following:
 -Products
 -Banner
 -Add Products
->>>>>>> bcdd982e0637353974c6a16383e347aceea7439a
 
 -v 1.0.4
 
 updated the UI  
 - changed coupon, dashboard and banner  in css folder
 - changed AddProductpage, banner,  coupon, dashboard, and product 
+-v 1.0.4
+- little work on ui 

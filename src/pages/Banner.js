@@ -6,10 +6,10 @@ import AdminNavbar from './Navbar';
 
 export default function BannerPage() {
   const [banners, setBanners] = useState([]);
-  const [file, setFile]     = useState(null);
-  const [link, setLink]     = useState('');
-  const [text, setText]     = useState('');         // if you want to include banner text
-  const [error, setError]   = useState('');
+  const [file, setFile] = useState(null);
+  const [link, setLink] = useState('');
+  const [text, setText] = useState('');
+  const [error, setError] = useState('');
 
   useEffect(() => {
     load();
@@ -34,7 +34,7 @@ export default function BannerPage() {
     const formData = new FormData();
     formData.append('image', file);
     formData.append('link', link);
-    formData.append('text', text);  // include if you added text to the model
+    formData.append('text', text);
 
     try {
       await createBanner(formData);
@@ -54,66 +54,68 @@ export default function BannerPage() {
 
   return (
     <>
-        <AdminNavbar Banners={BannerPage} />
-    <div className="banner-page">
-      <h2>Manage Banners</h2>
+      <AdminNavbar />
 
-      <form onSubmit={handleAdd} className="banner-form">
-        {error && <p className="error">{error}</p>}
+      <div className="banner-page">
+        <h2>📸 Create New Banner</h2>
 
-        <label>
-          Select Image:
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => setFile(e.target.files[0])}
-          />
-        </label>
+        <form onSubmit={handleAdd} className="banner-form">
+          {error && <p className="error">{error}</p>}
 
-        <label>
-          Text (optional):
-          <input
-            type="text"
-            placeholder="Banner text"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-          />
-        </label>
-
-        <label>
-          Link (optional):
-          <input
-            type="text"
-            placeholder="https://..."
-            value={link}
-            onChange={(e) => setLink(e.target.value)}
-          />
-        </label>
-
-        <button type="submit">Upload Banner</button>
-      </form>
-
-      <ul className="banner-list">
-        {banners.map((b) => (
-          <li key={b._id} className="banner-item">
-            <img
-              src={b.image}
-              alt={b.text || 'Banner'}
-              style={{ maxWidth: 300, display: 'block', marginBottom: 8 }}
+          <label>
+            Image
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => setFile(e.target.files[0])}
             />
-            {b.text && <p>{b.text}</p>}
-            {b.link && (
-              <p>
-                <a href={b.link} target="_blank" rel="noreferrer">
-                  Visit link
-                </a>
-              </p>
-            )}
-            <button onClick={() => handleDelete(b._id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
-    </div>
+          </label>
+
+          <label>
+            Text (optional)
+            <input
+              type="text"
+              placeholder="Banner text"
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+            />
+          </label>
+
+          <label>
+            Link (optional)
+            <input
+              type="text"
+              placeholder="https://..."
+              value={link}
+              onChange={(e) => setLink(e.target.value)}
+            />
+          </label>
+
+          <button type="submit">Upload Banner</button>
+        </form>
+
+        <h2 className="banner-list-title">📋 Existing Banners</h2>
+
+        <div className="banner-list">
+          {banners.map((b) => (
+            <div key={b._id} className="banner-item">
+              <img
+                src={b.image}
+                alt={b.text || 'Banner'}
+              />
+              {b.text && <p>{b.text}</p>}
+              {b.link && (
+                <p>
+                  <a href={b.link} target="_blank" rel="noreferrer">
+                    Visit link
+                  </a>
+                </p>
+              )}
+              <button onClick={() => handleDelete(b._id)}>Delete</button>
+            </div>
+          ))}
+        </div>
+      </div>
     </>
   );
 }

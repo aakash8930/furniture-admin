@@ -5,11 +5,12 @@ import {
   deleteProduct as apiDeleteProduct,
 } from '../api/ProductApi';
 import AdminNavbar from './Navbar';
+import '../css/Product.css'; // ✅ Import the new CSS
 
 const ProductPage = () => {
   const [products, setProducts] = useState([]);
   const [query, setQuery] = useState('');
-  const [hoveredCard, setHoveredCard] = useState(null); // ✅ for hover tracking
+  const [hoveredCard, setHoveredCard] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -45,13 +46,12 @@ const ProductPage = () => {
 
   return (
     <>
-      <AdminNavbar Products={ProductPage} />
-      <div style={{ padding: '1rem' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
-          <button
-            onClick={() => navigate('/admin/products/add')}
-            style={buttonStyle}
-          >
+      <AdminNavbar />
+      <div className="product-page">
+        <h2 className="product-heading">🛒 Manage Products</h2>
+
+        <div className="product-controls">
+          <button onClick={() => navigate('/admin/products/add')} style={buttonStyle}>
             + Add Product
           </button>
           <input
@@ -63,7 +63,7 @@ const ProductPage = () => {
           />
         </div>
 
-        <div style={gridStyle}>
+        <div className="product-grid">
           {filtered.map(p => (
             <div
               key={p._id}
@@ -106,7 +106,7 @@ const ProductPage = () => {
   );
 };
 
-// Styles (unchanged from your latest version)
+// Styles
 const buttonStyle = {
   padding: '10px 20px',
   background: 'linear-gradient(to right, #60a5fa, #3b82f6)',
@@ -130,13 +130,6 @@ const searchStyle = {
   background: 'rgba(255,255,255,0.7)',
   backdropFilter: 'blur(10px)',
   boxShadow: '0 2px 6px rgba(0, 0, 0, 0.04)',
-};
-
-const gridStyle = {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-  gap: '1.5rem',
-  paddingTop: '1rem'
 };
 
 const cardStyle = {

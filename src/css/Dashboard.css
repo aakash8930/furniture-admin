@@ -1,38 +1,58 @@
 /* Dashboard Main Container */
 .dashboard-container {
   padding: 4rem 2rem;
-  background-color: #f7fafc;
+  background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   animation: fadeIn 0.4s ease-in;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
 }
 
+/* Page Heading */
 .dashboard-container h1 {
-  font-size: 2.2rem;
-  margin-bottom: 2rem;
-  color: #2d3748;
+  font-size: 2.25rem;
+  margin-bottom: 2.5rem;
+  color: #0f172a;
   font-weight: 700;
   text-align: center;
+  border-left: 6px solid #3b82f6;
+  padding-left: 1rem;
+  letter-spacing: 0.3px;
 }
 
 /* Call-to-action button */
 .dashboard-container button {
-  padding: 0.6rem 1.2rem;
-  background-color: #e53e3e;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(to right, #60a5fa, #3b82f6);
   color: #ffffff;
   border: none;
-  border-radius: 6px;
+  border-radius: 12px;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.25);
 }
 
 .dashboard-container button:hover {
-  background-color: #c53030;
+  background: linear-gradient(to right, #3b82f6, #2563eb);
+  transform: translateY(-2px);
+}
+
+/* Optional Dashboard Glass Cards */
+.dashboard-card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(16px);
+  border-radius: 16px;
+  border: 1px solid rgba(209, 213, 219, 0.4);
+  padding: 2rem;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 900px;
 }
 
 /* Navbar Styling */

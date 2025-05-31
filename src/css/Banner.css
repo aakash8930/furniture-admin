@@ -1,7 +1,7 @@
 .banner-page {
   min-height: 100vh;
   padding: 3rem 2rem;
-  background: linear-gradient(120deg, #f4f7fa, #e9f1ff);
+  background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
   font-family: 'Inter', 'Segoe UI', sans-serif;
   display: flex;
   flex-direction: column;
@@ -18,15 +18,17 @@
   letter-spacing: 0.3px;
 }
 
+/* Glassy container for the form */
 .banner-form {
   background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   border-radius: 18px;
   border: 1px solid rgba(209, 213, 219, 0.4);
   padding: 2.5rem;
-  max-width: 800px;
+  max-width: 900px;
   width: 100%;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
@@ -48,7 +50,7 @@
   border: 1px solid #d1d5db;
   border-radius: 12px;
   font-size: 1rem;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.85);
   transition: all 0.3s ease;
 }
 
@@ -78,26 +80,33 @@
   transform: translateY(-2px);
 }
 
-.error {
-  grid-column: span 2;
-  color: #ef4444;
-  font-weight: 500;
-  margin-top: -1rem;
+.banner-list-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 3rem 0 1.5rem;
+  border-left: 6px solid #3b82f6;
+  padding-left: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .banner-list {
-  margin-top: 3rem;
+  margin-top: 1.5rem;
+  width: 100%;
+  max-width: 1000px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 2rem;
-  width: 100%;
-  max-width: 1000px;
 }
 
+/* Banner card */
 .banner-item {
   background: rgba(255, 255, 255, 0.7);
   border-radius: 16px;
   backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   padding: 1.5rem;
   text-align: center;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
