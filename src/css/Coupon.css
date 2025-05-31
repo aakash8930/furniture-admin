@@ -1,104 +1,132 @@
-/* src/styles/coupon.css */
+.coupon-page {
+  padding: 2rem;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e0f7fa, #f9f9f9);
+  display: flex;
+  justify-content: center;
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
+}
 
 .coupon-container {
-    padding: 24px;
-    max-width: 1200px;
-    margin: auto;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  
-  .coupon-heading {
-    font-size: 1.75rem;
-    font-weight: bold;
-    margin-bottom: 16px;
-  }
-  
-  .coupon-form {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 16px;
-    margin-bottom: 32px;
-  }
-  
-  @media (min-width: 768px) {
-    .coupon-form {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-  
-  .coupon-input {
-    padding: 10px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    font-size: 1rem;
-  }
-  
-  .coupon-input:focus {
-    outline: none;
-    border-color: #2563eb;
-  }
-  
-  .coupon-submit-btn {
-    background-color: #2563eb;
-    color: white;
-    padding: 10px;
-    font-size: 1rem;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .coupon-submit-btn:hover {
-    background-color: #1d4ed8;
-  }
-  
-  .coupon-table-heading {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 16px;
-  }
-  
-  .coupon-table-wrapper {
-    overflow-x: auto;
-  }
-  
-  .coupon-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: white;
-    border: 1px solid #d1d5db;
-  }
-  
-  .coupon-table th,
-  .coupon-table td {
-    border: 1px solid #d1d5db;
-    padding: 10px;
-    text-align: left;
-    font-size: 0.95rem;
-  }
-  
-  .coupon-table th {
-    background-color: #f3f4f6;
-    font-weight: 600;
-  }
-  
-  .delete-btn {
-    background-color: #ef4444;
-    color: white;
-    padding: 6px 12px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  
-  .delete-btn:hover {
-    background-color: #dc2626;
-  }
-  
-  .no-coupon-row {
-    text-align: center;
-    padding: 16px;
-    color: #6b7280;
-  }
-  
+  width: 100%;
+  max-width: 1200px;
+  padding: 2.5rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(200, 200, 200, 0.4);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  color: #1f2937;
+  transition: all 0.4s ease;
+}
+
+.coupon-heading,
+.coupon-table-heading {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: #0f172a;
+  border-left: 5px solid #3b82f6;
+  padding-left: 1rem;
+  letter-spacing: 0.5px;
+}
+
+.coupon-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #475569;
+}
+
+.coupon-input {
+  padding: 12px 16px;
+  font-size: 1rem;
+  border-radius: 12px;
+  border: 1px solid #cbd5e1;
+  background: rgba(255, 255, 255, 0.8);
+  color: #1f2937;
+  transition: all 0.3s ease;
+}
+
+.coupon-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.form-actions {
+  grid-column: span 2;
+  text-align: right;
+  margin-top: 1rem;
+}
+
+.coupon-submit-btn {
+  background: linear-gradient(to right, #60a5fa, #3b82f6);
+  color: white;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.coupon-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(59, 130, 246, 0.3);
+}
+
+.coupon-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 16px;
+  overflow: hidden;
+  color: #1e293b;
+}
+
+.coupon-table th,
+.coupon-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 0.95rem;
+}
+
+.coupon-table th {
+  background: rgba(243, 244, 246, 0.7);
+  color: #334155;
+  font-weight: 600;
+}
+
+.coupon-table tbody tr:hover {
+  background: rgba(147, 197, 253, 0.2);
+  transition: background 0.2s ease;
+}
+
+.no-coupon-row {
+  text-align: center;
+  padding: 1rem;
+  color: #64748b;
+}
+
+.delete-btn {
+  background-color: #f87171;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.delete-btn:hover {
+  background-color: #dc2626;
+}

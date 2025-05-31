@@ -4,7 +4,7 @@ import {
   fetchAllCoupons,
   deleteCoupon,
 } from '../api/CouponApi';
-import '../css/Coupon.css'; // 👈 Import your CSS file
+import '../css/Coupon.css'; // 👈 Scoped styles here
 import AdminNavbar from './Navbar';
 
 const CouponPage = () => {
@@ -69,123 +69,97 @@ const CouponPage = () => {
   };
 
   return (
-<>
-<AdminNavbar Coupons={CouponPage} />
-    <div className="coupon-container">
-      <h2 className="coupon-heading">Create New Coupon</h2>
+    <>
+      <AdminNavbar />
+      <div className="coupon-page">
+        <div className="coupon-container">
+          {/* === Form Section === */}
+          <div className="coupon-form-section">
+            <h2 className="coupon-heading">🎁 Create New Coupon</h2>
 
-      <form onSubmit={handleSubmit} className="coupon-form">
-        <label>Name</label>
-        <input
-          type="text"
-          name="heading"
-          value={form.heading}
-          onChange={handleChange}
-          placeholder="Coupon Heading"
-          className="coupon-input"
-          required
-        />
-                <label>Description</label>
-        <input
-          type="text"
-          name="description"
-          value={form.description}
-          onChange={handleChange}
-          placeholder="Coupon Description"
-          className="coupon-input"
-          required
-        />        <label>Expiry</label>
-        <input
-          type="datetime-local"
-          name="expiryDate"
-          value={form.expiryDate}
-          onChange={handleChange}
-          className="coupon-input"
-          required
-        />        <label>Use Limit</label>
-        <input
-          type="number"
-          name="usageLimit"
-          value={form.usageLimit}
-          onChange={handleChange}
-          placeholder="Usage Limit"
-          className="coupon-input"
-        />        <label>Minimum Order Value</label>
-        <input
-          type="number"
-          name="minOrderValue"
-          value={form.minOrderValue}
-          onChange={handleChange}
-          placeholder="Minimum Order Value"
-          className="coupon-input"
-        />        <label>Discount %</label>
-        <input
-          type="number"
-          name="discountPercent"
-          value={form.discountPercent}
-          onChange={handleChange}
-          placeholder="Discount Percent (%)"
-          className="coupon-input"
-        />        <label>Discount ₹</label>
-        <input
-          type="number"
-          name="discountAmount"
-          value={form.discountAmount}
-          onChange={handleChange}
-          placeholder="Discount Amount (₹)"
-          className="coupon-input"
-        />
-        <button type="submit" className="coupon-submit-btn">
-          Create Coupon
-        </button>
-      </form>
+            <form onSubmit={handleSubmit} className="coupon-form">
+              {[
+                { label: 'Name', name: 'heading', type: 'text', placeholder: 'Coupon Heading' },
+                { label: 'Description', name: 'description', type: 'text', placeholder: 'Coupon Description' },
+                { label: 'Expiry', name: 'expiryDate', type: 'datetime-local' },
+                { label: 'Use Limit', name: 'usageLimit', type: 'number', placeholder: 'Usage Limit' },
+                { label: 'Minimum Order Value', name: 'minOrderValue', type: 'number', placeholder: '₹0' },
+                { label: 'Discount %', name: 'discountPercent', type: 'number', placeholder: 'e.g. 10%' },
+                { label: 'Discount ₹', name: 'discountAmount', type: 'number', placeholder: 'e.g. ₹100' },
+              ].map(({ label, name, type, placeholder }) => (
+                <div className="form-group" key={name}>
+                  <label htmlFor={name}>{label}</label>
+                  <input
+                    id={name}
+                    type={type}
+                    name={name}
+                    value={form[name]}
+                    onChange={handleChange}
+                    placeholder={placeholder}
+                    className="coupon-input"
+                    required={name !== 'discountAmount'}
+                  />
+                </div>
+              ))}
+              <div className="form-actions">
+                <button type="submit" className="coupon-submit-btn">
+                  Create Coupon
+                </button>
+              </div>
+            </form>
+          </div>
 
-      <h2 className="coupon-table-heading">Existing Coupons</h2>
-      <div className="coupon-table-wrapper">
-        <table className="coupon-table">
-          <thead>
-            <tr>
-              <th>Heading</th>
-              <th>Description</th>
-              <th>Expiry</th>
-              <th>Limit</th>
-              <th>Min Value</th>
-              <th>% Off</th>
-              <th>₹ Off</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {coupons.map((c) => (
-              <tr key={c._id}>
-                <td>{c.heading}</td>
-                <td>{c.description}</td>
-                <td>{new Date(c.expiryDate).toLocaleString()}</td>
-                <td>{c.usageLimit}</td>
-                <td>₹{c.minOrderValue}</td>
-                <td>{c.discountPercent}%</td>
-                <td>₹{c.discountAmount}</td>
-                <td>
-                  <button
-                    onClick={() => handleDelete(c._id)}
-                    className="delete-btn"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-            {coupons.length === 0 && (
-              <tr>
-                <td colSpan="8" className="no-coupon-row">
-                  No coupons created yet.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+          {/* === Table Section === */}
+          <div className="coupon-table-section">
+            <h2 className="coupon-table-heading">📋 Existing Coupons</h2>
+            <div className="coupon-table-wrapper">
+              <table className="coupon-table">
+                <thead>
+                  <tr>
+                    <th>Heading</th>
+                    <th>Description</th>
+                    <th>Expiry</th>
+                    <th>Limit</th>
+                    <th>Min Value</th>
+                    <th>% Off</th>
+                    <th>₹ Off</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {coupons.length > 0 ? (
+                    coupons.map((c) => (
+                      <tr key={c._id}>
+                        <td>{c.heading}</td>
+                        <td>{c.description}</td>
+                        <td>{new Date(c.expiryDate).toLocaleString()}</td>
+                        <td>{c.usageLimit}</td>
+                        <td>₹{c.minOrderValue}</td>
+                        <td>{c.discountPercent}%</td>
+                        <td>₹{c.discountAmount}</td>
+                        <td>
+                          <button
+                            onClick={() => handleDelete(c._id)}
+                            className="delete-btn"
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="8" className="no-coupon-row">
+                        No coupons created yet.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
     </>
   );
 };
