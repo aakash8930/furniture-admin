@@ -1,4 +1,7 @@
+// src/pages/Coupon.jsx
+
 import React, { useEffect, useState } from 'react';
+import { nanoid } from 'nanoid';
 import {
   createCoupon,
   fetchAllCoupons,
