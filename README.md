@@ -23,3 +23,9 @@ updated the UI
 - changed AddProductpage, banner,  coupon, dashboard, and product 
 -v 1.0.4
 - little work on ui 
+
+- v 1.0.6
+- Added Orders
+- Coupons fixed 
+- Added Users
+- Added Sales Chart at dashboard

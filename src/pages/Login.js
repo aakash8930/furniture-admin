@@ -1,7 +1,7 @@
 // src/pages/Login.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginAdmin } from '../api/LoginApi';   // ← make sure this path is correct
+import { loginAdmin } from '../api/LoginApi';   // adjust path if needed
 import '../css/Login.css';
 
 export default function Login() {
@@ -15,14 +15,13 @@ export default function Login() {
     setError('');
 
     try {
-      // call your real login endpoint
       const { token } = await loginAdmin({ email, password });
-      
-      // store token and redirect
-      localStorage.setItem('token', token);
+
+      // --- change this line from 'token' → 'adminToken' ----
+      localStorage.setItem('adminToken', token);
+
       navigate('/admin/dashboard');
     } catch (err) {
-      // if backend returned 4xx/5xx, show its message or a generic one
       const msg = err.response?.data?.message || 'Login failed';
       setError(msg);
     }
@@ -37,14 +36,14 @@ export default function Login() {
           type="email"
           placeholder="Email"
           value={email}
-          onChange={e => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
         <input
           type="password"
           placeholder="Password"
           value={password}
-          onChange={e => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
         <button type="submit">Sign In</button>

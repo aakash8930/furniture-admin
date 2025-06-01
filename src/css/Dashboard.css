@@ -1,120 +1,100 @@
-/* Dashboard Main Container */
+/* src/css/Dashboard.css */
+
+/* Overall dashboard background (lightened for contrast outside chart) */
 .dashboard-container {
-  padding: 4rem 2rem;
-  background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+  padding: 3rem 2rem;
+  background: white; /* very dark background */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  animation: fadeIn 0.4s ease-in;
-  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-family: 'Segoe UI', 'Inter', sans-serif;
+  color: #ffffff;
 }
 
-/* Page Heading */
+/* Dashboard heading */
 .dashboard-container h1 {
-  font-size: 2.25rem;
-  margin-bottom: 2.5rem;
-  color: #0f172a;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: #00ffea; /* neon accent */
   font-weight: 700;
   text-align: center;
-  border-left: 6px solid #3b82f6;
-  padding-left: 1rem;
-  letter-spacing: 0.3px;
 }
 
-/* Call-to-action button */
-.dashboard-container button {
-  padding: 0.75rem 1.5rem;
-  background: linear-gradient(to right, #60a5fa, #3b82f6);
-  color: #ffffff;
-  border: none;
-  border-radius: 12px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.25);
-}
-
-.dashboard-container button:hover {
-  background: linear-gradient(to right, #3b82f6, #2563eb);
-  transform: translateY(-2px);
-}
-
-/* Optional Dashboard Glass Cards */
-.dashboard-card {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(16px);
-  border-radius: 16px;
-  border: 1px solid rgba(209, 213, 219, 0.4);
-  padding: 2rem;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.05);
+/* Error & loading states */
+.dashboard-error {
+  color: #ff4d6d;
+  background: #2a1a1a;
+  padding: 1rem 1.5rem;
+  border-radius: 6px;
+  border: 1px solid #5c1a1a;
   margin-bottom: 2rem;
   width: 100%;
   max-width: 900px;
-}
-
-/* Navbar Styling */
-.navbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: #ffffff;
-  padding: 1rem 2rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.navbar__banner h1 {
-  margin: 0;
-  font-size: 1.6rem;
-  font-weight: bold;
-  color: #2b6cb0;
-  letter-spacing: 0.5px;
-}
-
-.navbar__nav {
-  display: flex;
-  gap: 1.5rem;
-  align-items: center;
-}
-
-.navbar__link {
-  color: #4a5568;
-  text-decoration: none;
+  text-align: center;
   font-weight: 500;
-  position: relative;
-  padding-bottom: 4px;
-  transition: color 0.2s ease;
 }
 
-.navbar__link:hover {
-  color: #2c5282;
+.dashboard-loading {
+  font-size: 1.25rem;
+  color: #ccc;
+  margin-top: 2rem;
 }
 
-.navbar__link--active {
-  color: #2c5282;
-  border-bottom: 2px solid #2c5282;
+/* Card container for dark chart */
+.chart-card-dark {
+  background: #1e1e2a; /* deep navy/purplish */
+  border-radius: 12px;
+  border: 1px solid #333;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  width: 100%;
+  max-width: 1000px;
+  margin-bottom: 2rem;
+  animation: fadeIn 0.4s ease-in;
 }
 
-.navbar__logout {
-  background: transparent;
+/* Toggle buttons (dark theme) */
+.chart-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.chart-button-dark {
+  background: #2a2a3d;
+  color: #ccc;
   border: none;
-  color: #e53e3e;
+  border-radius: 8px;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  padding: 4px 8px;
-  transition: color 0.2s ease;
+  transition: background 0.3s ease, transform 0.2s ease, color 0.3s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
 }
 
-.navbar__logout:hover {
-  color: #c53030;
+.chart-button-dark:hover {
+  background: #3e3e5b;
+  color: #fff;
+  transform: translateY(-1px);
 }
 
-/* Animation */
+.chart-button-dark.active-dark {
+  background: #00ffea;
+  color: #0a0a0f;
+  box-shadow: 0 3px 16px rgba(0, 255, 234, 0.5);
+}
+
+/* Dark chart container (so background behind axes is dark) */
+.chart-container-dark {
+  background: #161623; /* slightly lighter dark for the chart area */
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+/* Animation keyframes */
 @keyframes fadeIn {
   from {
     opacity: 0;

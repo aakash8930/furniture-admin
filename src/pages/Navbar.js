@@ -1,9 +1,18 @@
 // src/components/AdminNavbar.jsx
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import '../css/AdminNavbar.css'; // Optional CSS if needed
 
-const AdminNavbar = ({ logout }) => {
+import React from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import '../css/AdminNavbar.css';
+
+export default function AdminNavbar() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // remove the stored admin token and redirect to login
+    localStorage.removeItem('adminToken');
+    navigate('/login', { replace: true });
+  };
+
   return (
     <header className="navbar">
       <nav className="navbar__nav">
@@ -15,6 +24,7 @@ const AdminNavbar = ({ logout }) => {
         >
           Banner
         </NavLink>
+
         <NavLink
           to="/admin/dashboard"
           className={({ isActive }) =>
@@ -23,6 +33,7 @@ const AdminNavbar = ({ logout }) => {
         >
           Dashboard
         </NavLink>
+
         <NavLink
           to="/admin/coupon"
           className={({ isActive }) =>
@@ -31,6 +42,7 @@ const AdminNavbar = ({ logout }) => {
         >
           Coupons
         </NavLink>
+
         <NavLink
           to="/admin/products"
           className={({ isActive }) =>
@@ -39,20 +51,31 @@ const AdminNavbar = ({ logout }) => {
         >
           Products
         </NavLink>
+
         <NavLink
           to="/admin/orders"
           className={({ isActive }) =>
             isActive ? 'navbar__link navbar__link--active' : 'navbar__link'
           }
+          end={false}
         >
           Orders
         </NavLink>
-        <button onClick={logout} className="navbar__logout">
+        
+        <NavLink
+          to="/admin/users"
+          className={({ isActive }) =>
+            isActive ? 'navbar__link navbar__link--active' : 'navbar__link'
+          }
+          end={false}
+        >
+          Users
+        </NavLink>
+
+        <button onClick={handleLogout} className="navbar__logout">
           Logout
         </button>
       </nav>
     </header>
   );
-};
-
-export default AdminNavbar;
+}

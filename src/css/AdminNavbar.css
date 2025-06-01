@@ -1,0 +1,64 @@
+/* Navbar.css */
+
+/* Container for the entire navbar */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Left side branding/logo */
+.navbar__banner h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #2b6cb0; /* your primary blue */
+  letter-spacing: 0.5px;
+}
+
+/* Right side navigation links container */
+.navbar__nav {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+/* Individual link style */
+.navbar__link {
+  color: #4a5568; /* gray-700 */
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+  padding-bottom: 4px;
+  transition: color 0.2s ease;
+}
+
+.navbar__link:hover {
+  color: #2c5282; /* gray-800/darker blue */
+}
+
+.navbar__link--active {
+  color: #2c5282;
+  border-bottom: 2px solid #2c5282;
+}
+
+/* Logout button style */
+.navbar__logout {
+  background: transparent;
+  border: none;
+  color: #e53e3e; /* red-600 */
+  font-weight: 500;
+  cursor: pointer;
+  padding: 4px 8px;
+  transition: color 0.2s ease;
+}
+
+.navbar__logout:hover {
+  color: #c53030; /* red-700 */
+}
