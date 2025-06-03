@@ -11,6 +11,7 @@ import CouponPage from './pages/Coupon';
 import AdminOrders from './pages/Orders';
 import AdminOrderDetails from './pages/OrderDetails';
 import UsersPage from './pages/Users';
+import AdminProductDetails from './pages/ProductDetails';
 
 export default function App() {
   return (
@@ -49,7 +50,9 @@ export default function App() {
         <Route path="/admin/products/edit/:id" element={<ProtectedRoute><EditProductPage /></ProtectedRoute>} />
         <Route path="/admin/orders" element={<ProtectedRoute><AdminOrders /></ProtectedRoute>} />
         <Route path="/admin/orders/:id" element={<AdminOrderDetails />} />
-        <Route path="/admin/users" element={<ProtectedRoute><UsersPage /></ProtectedRoute>} />
+        <Route path="/admin/users" element={<ProtectedRoute><UsersPage /></ProtectedRoute>} />        
+        <Route path="/admin/products/:id" element={<AdminProductDetails />}
+        />
 
 
 

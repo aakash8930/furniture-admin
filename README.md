@@ -29,3 +29,7 @@ updated the UI
 - Coupons fixed 
 - Added Users
 - Added Sales Chart at dashboard
+
+- v 1.0.7
+- Added Product Details 
+- Added Reviews

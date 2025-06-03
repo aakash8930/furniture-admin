@@ -1,11 +1,13 @@
+// src/components/ProductPage.jsx
+
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom'; // <-- import Link
 import {
   fetchAllProducts,
   deleteProduct as apiDeleteProduct,
 } from '../api/ProductApi';
 import AdminNavbar from './Navbar';
-import '../css/Product.css'; // ✅ Import the new CSS
+import '../css/Product.css';
 
 const ProductPage = () => {
   const [products, setProducts] = useState([]);
@@ -25,12 +27,13 @@ const ProductPage = () => {
     loadProducts();
   }, []);
 
-  const filtered = products.filter(p =>
-    p.name.toLowerCase().includes(query.toLowerCase()) ||
-    p.category.toLowerCase().includes(query.toLowerCase())
+  const filtered = products.filter(
+    p =>
+      p.name.toLowerCase().includes(query.toLowerCase()) ||
+      p.category.toLowerCase().includes(query.toLowerCase())
   );
 
-  const handleDelete = async (id) => {
+  const handleDelete = async id => {
     if (!window.confirm('Delete this product?')) return;
     try {
       await apiDeleteProduct(id);
@@ -40,7 +43,7 @@ const ProductPage = () => {
     }
   };
 
-  const handleEdit = (id) => {
+  const handleEdit = id => {
     navigate(`/admin/products/edit/${id}`);
   };
 
@@ -51,7 +54,10 @@ const ProductPage = () => {
         <h2 className="product-heading">🛒 Manage Products</h2>
 
         <div className="product-controls">
-          <button onClick={() => navigate('/admin/products/add')} style={buttonStyle}>
+          <button
+            onClick={() => navigate('/admin/products/add')}
+            style={buttonStyle}
+          >
             + Add Product
           </button>
           <input
@@ -69,7 +75,8 @@ const ProductPage = () => {
               key={p._id}
               style={{
                 ...cardStyle,
-                transform: hoveredCard === p._id ? 'scale(1.03)' : 'scale(1)',
+                transform:
+                  hoveredCard === p._id ? 'scale(1.03)' : 'scale(1)',
                 boxShadow:
                   hoveredCard === p._id
                     ? '0 16px 40px rgba(0, 0, 0, 0.08)'
@@ -90,12 +97,33 @@ const ProductPage = () => {
                 )}
               </div>
               <h3 style={{ margin: '0.5rem 0' }}>{p.name}</h3>
-              <p style={{ margin: '0.25rem 0', color: '#555' }}>{p.category}</p>
-              <p style={{ margin: '0.25rem 0', fontWeight: 'bold' }}>₹{p.price.toFixed(2)}</p>
+              <p style={{ margin: '0.25rem 0', color: '#555' }}>
+                {p.category}
+              </p>
+              <p style={{ margin: '0.25rem 0', fontWeight: 'bold' }}>
+                ₹{p.price.toFixed(2)}
+              </p>
               <p style={{ margin: '0.25rem 0' }}>Stock: {p.stock}</p>
-              <div style={{ marginTop: '0.5rem' }}>
-                <button onClick={() => handleEdit(p._id)} style={editBtnStyle}>Edit</button>
-                <button onClick={() => handleDelete(p._id)} style={deleteBtnStyle}>Delete</button>
+              <div style={{ marginTop: '0.5rem', display: 'flex' }}>
+                <button
+                  onClick={() => handleEdit(p._id)}
+                  style={editBtnStyle}
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDelete(p._id)}
+                  style={deleteBtnStyle}
+                >
+                  Delete
+                </button>
+                {/* New “View Details” button */}
+                <Link
+                  to={`/admin/products/${p._id}`}
+                  style={detailsBtnStyle}
+                >
+                  View Details
+                </Link>
               </div>
             </div>
           ))}
@@ -106,7 +134,7 @@ const ProductPage = () => {
   );
 };
 
-// Styles
+// Styles (same as before, plus “View Details” button style)
 const buttonStyle = {
   padding: '10px 20px',
   background: 'linear-gradient(to right, #60a5fa, #3b82f6)',
@@ -117,7 +145,7 @@ const buttonStyle = {
   fontSize: '0.95rem',
   cursor: 'pointer',
   transition: '0.3s ease',
-  boxShadow: '0 4px 14px rgba(59, 130, 246, 0.25)'
+  boxShadow: '0 4px 14px rgba(59, 130, 246, 0.25)',
 };
 
 const searchStyle = {
@@ -151,7 +179,7 @@ const imageContainerStyle = {
   overflow: 'hidden',
   borderRadius: '12px',
   background: '#f1f5f9',
-  boxShadow: 'inset 0 0 6px rgba(0,0,0,0.05)'
+  boxShadow: 'inset 0 0 6px rgba(0,0,0,0.05)',
 };
 
 const imageStyle = {
@@ -160,7 +188,7 @@ const imageStyle = {
   left: 0,
   width: '100%',
   height: '100%',
-  objectFit: 'cover'
+  objectFit: 'cover',
 };
 
 const placeholderStyle = {
@@ -189,6 +217,23 @@ const deleteBtnStyle = {
   background: '#ef4444',
   marginLeft: '0.5rem',
   boxShadow: '0 2px 10px rgba(239, 68, 68, 0.2)',
+};
+
+const detailsBtnStyle = {
+  padding: '6px 14px',
+  background: '#3b82f6',
+  color: '#fff',
+  fontSize: '0.85rem',
+  fontWeight: '600',
+  border: 'none',
+  borderRadius: '8px',
+  cursor: 'pointer',
+  marginLeft: '0.5rem',
+  boxShadow: '0 2px 10px rgba(59, 130, 246, 0.2)',
+  textDecoration: 'none',
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 };
 
 export default ProductPage;
