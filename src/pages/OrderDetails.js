@@ -92,109 +92,109 @@ export default function AdminOrderDetailsPage() {
   const canDownload = order.status === 'Delivered';
 
   return (
-        <>
-          <AdminNavbar />
-    <div className="order-details-page">
-      <button className="back-btn" onClick={() => navigate(-1)}>
-        ← Back to Orders
-      </button>
-
-      <div className="order-info">
-        <h2>Order #{order.orderId || order._id}</h2>
-        <p>
-          <strong>Date:</strong> {new Date(order.createdAt).toLocaleString()}
-        </p>
-        <p>
-          <strong>Status:</strong>{' '}
-          <select
-            value={order.status}
-            onChange={(e) => handleStatusChange(e.target.value)}
-            disabled={actionLoading}
-            className="status-select"
-          >
-            {STATUS_OPTIONS.map((st) => (
-              <option key={st} value={st}>
-                {st}
-              </option>
-            ))}
-          </select>
-          {actionLoading && <span style={{ marginLeft: '0.5rem' }}>Updating…</span>}
-        </p>
-        <p>
-          <strong>Payment Method:</strong> {order.paymentMethod}
-        </p>
-      </div>
-
-      <div className="payment-breakdown">
-        <h3>Payment Breakdown</h3>
-        <div>
-          <span>Items Total:</span>
-          <span>₹{order.paymentBreakdown.itemsTotal.toLocaleString()}</span>
-        </div>
-        <div>
-          <span>Tax:</span>
-          <span>₹{order.paymentBreakdown.tax.toLocaleString()}</span>
-        </div>
-        <div>
-          <span>Shipping:</span>
-          <span>₹{order.paymentBreakdown.shipping.toLocaleString()}</span>
-        </div>
-        {order.paymentBreakdown.discount > 0 && (
-          <div>
-            <span>Discount:</span>
-            <span>−₹{order.paymentBreakdown.discount.toLocaleString()}</span>
-          </div>
-        )}
-        <hr />
-        <div className="grand-total">
-          <strong>Total:</strong>
-          <strong>₹{order.paymentBreakdown.total.toLocaleString()}</strong>
-        </div>
-      </div>
-
-      <div className="order-products">
-        <h3>Products</h3>
-        <div className="products-grid">
-          {order.products.map(({ product, quantity }) => (
-            <div key={product._id} className="product-cell">
-              <img src={product.imageUrl || '/images/placeholder.jpg'} alt={product.name} />
-              <p>{product.name}</p>
-              <p>Qty: {quantity}</p>
-              <p>₹{(product.price * quantity).toLocaleString()}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="order-address">
-        <h3>Delivery Address</h3>
-        <p>{order.userAddress.fullName}</p>
-        <p>
-          {order.userAddress.flat}, {order.userAddress.area}
-        </p>
-        <p>
-          {order.userAddress.city} – {order.userAddress.pincode}
-        </p>
-        <p>{order.userAddress.state}</p>
-        <p>Phone: {order.userAddress.phone}</p>
-      </div>
-
-      <div className="order-actions">
-        <button
-          className={`invoice-btn ${!canDownload ? 'disabled' : ''}`}
-          onClick={handleDownloadInvoice}
-          disabled={!canDownload}
-        >
-          Download Invoice
+    <>
+      <AdminNavbar />
+      <div className="order-details-page">
+        <button className="back-btn" onClick={() => navigate(-1)}>
+          ← Back to Orders
         </button>
-      </div>
 
-      <div className="order-tracking">
-        <h3>Track Shipment</h3>
-        {/* Admin-side shipment tracking integration goes here */}
-        Shipment tracking details…
+        <div className="order-info">
+          <h2>Order #{order.orderId || order._id}</h2>
+          <p>
+            <strong>Date:</strong> {new Date(order.createdAt).toLocaleString()}
+          </p>
+          <p>
+            <strong>Status:</strong>{' '}
+            <select
+              value={order.status}
+              onChange={(e) => handleStatusChange(e.target.value)}
+              disabled={actionLoading}
+              className="status-select"
+            >
+              {STATUS_OPTIONS.map((st) => (
+                <option key={st} value={st}>
+                  {st}
+                </option>
+              ))}
+            </select>
+            {actionLoading && <span style={{ marginLeft: '0.5rem' }}>Updating…</span>}
+          </p>
+          <p>
+            <strong>Payment Method:</strong> {order.paymentMethod}
+          </p>
+        </div>
+
+        <div className="payment-breakdown">
+          <h3>Payment Breakdown</h3>
+          <div>
+            <span>Items Total:</span>
+            <span>₹{order.paymentBreakdown.itemsTotal.toLocaleString()}</span>
+          </div>
+          <div>
+            <span>Tax:</span>
+            <span>₹{order.paymentBreakdown.tax.toLocaleString()}</span>
+          </div>
+          <div>
+            <span>Shipping:</span>
+            <span>₹{order.paymentBreakdown.shipping.toLocaleString()}</span>
+          </div>
+          {order.paymentBreakdown.discount > 0 && (
+            <div>
+              <span>Discount:</span>
+              <span>−₹{order.paymentBreakdown.discount.toLocaleString()}</span>
+            </div>
+          )}
+          <hr />
+          <div className="grand-total">
+            <strong>Total:</strong>
+            <strong>₹{order.paymentBreakdown.total.toLocaleString()}</strong>
+          </div>
+        </div>
+
+        <div className="order-products">
+          <h3>Products</h3>
+          <div className="products-grid">
+            {order.products.map(({ product, quantity }) => (
+              <div key={product._id} className="product-cell">
+                <img src={product.imageUrl || '/images/placeholder.jpg'} alt={product.name} />
+                <p>{product.name}</p>
+                <p>Qty: {quantity}</p>
+                <p>₹{(product.price * quantity).toLocaleString()}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="order-address">
+          <h3>Delivery Address</h3>
+          <p>{order.userAddress.fullName}</p>
+          <p>
+            {order.userAddress.flat}, {order.userAddress.area}
+          </p>
+          <p>
+            {order.userAddress.city} – {order.userAddress.pincode}
+          </p>
+          <p>{order.userAddress.state}</p>
+          <p>Phone: {order.userAddress.phone}</p>
+        </div>
+
+        <div className="order-actions">
+          <button
+            className={`invoice-btn ${!canDownload ? 'disabled' : ''}`}
+            onClick={handleDownloadInvoice}
+            disabled={!canDownload}
+          >
+            Download Invoice
+          </button>
+        </div>
+
+        <div className="order-tracking">
+          <h3>Track Shipment</h3>
+          {/* Admin-side shipment tracking integration goes here */}
+          Shipment tracking details…
+        </div>
       </div>
-    </div>
     </>
   );
 }

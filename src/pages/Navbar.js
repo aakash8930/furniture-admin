@@ -1,14 +1,21 @@
 // src/components/AdminNavbar.jsx
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import '../css/AdminNavbar.css';
 
 export default function AdminNavbar() {
   const navigate = useNavigate();
 
+  // Check admin authentication on mount
+  useEffect(() => {
+    const token = localStorage.getItem('adminToken');
+    if (!token) {
+      navigate('/login', { replace: true });
+    }
+  }, [navigate]);
+
   const handleLogout = () => {
-    // remove the stored admin token and redirect to login
     localStorage.removeItem('adminToken');
     navigate('/login', { replace: true });
   };
@@ -57,17 +64,15 @@ export default function AdminNavbar() {
           className={({ isActive }) =>
             isActive ? 'navbar__link navbar__link--active' : 'navbar__link'
           }
-          end={false}
         >
           Orders
         </NavLink>
-        
+
         <NavLink
           to="/admin/users"
           className={({ isActive }) =>
             isActive ? 'navbar__link navbar__link--active' : 'navbar__link'
           }
-          end={false}
         >
           Users
         </NavLink>

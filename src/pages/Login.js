@@ -1,7 +1,7 @@
 // src/pages/Login.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginAdmin } from '../api/LoginApi';   // adjust path if needed
+import { loginAdmin } from '../api/LoginApi';
 import '../css/Login.css';
 
 export default function Login() {
@@ -15,14 +15,18 @@ export default function Login() {
     setError('');
 
     try {
-      const { token } = await loginAdmin({ email, password });
+      const res = await loginAdmin({ email, password });
 
-      // --- change this line from 'token' → 'adminToken' ----
-      localStorage.setItem('adminToken', token);
+      if (!res.token) throw new Error('No token received');
 
+      // ✅ Save token
+      localStorage.setItem('adminToken', res.token);
+
+      // ✅ Redirect to dashboard
       navigate('/admin/dashboard');
     } catch (err) {
-      const msg = err.response?.data?.message || 'Login failed';
+      console.error('Login error:', err);
+      const msg = err.response?.data?.message || err.message || 'Login failed';
       setError(msg);
     }
   };

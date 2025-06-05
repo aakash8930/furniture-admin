@@ -47,7 +47,8 @@ export default function Dashboard() {
 
   // 2) Fetch all orders on mount
   useEffect(() => {
-    const adminToken = localStorage.getItem('token');
+    const adminToken = localStorage.getItem('adminToken'); 
+
     if (!adminToken) {
       navigate('/login');
       return;

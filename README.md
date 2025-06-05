@@ -33,3 +33,8 @@ updated the UI
 - v 1.0.7
 - Added Product Details 
 - Added Reviews
+
+- v 1.0.8
+- Fix Banner Uploading
+- Fix Login
+- Fix Navbar in Orders

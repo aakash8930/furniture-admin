@@ -27,6 +27,7 @@ export default function BannerPage() {
   const handleAdd = async (e) => {
     e.preventDefault();
     setError('');
+
     if (!file) {
       return setError('Please choose an image file');
     }
@@ -37,19 +38,25 @@ export default function BannerPage() {
     formData.append('text', text);
 
     try {
-      await createBanner(formData);
+      const adminToken = localStorage.getItem('adminToken');
+      await createBanner(formData, adminToken);
       setFile(null);
       setLink('');
       setText('');
       load();
-    } catch {
+    } catch (err) {
       setError('Upload failed');
     }
   };
 
   const handleDelete = async (id) => {
-    await deleteBanner(id);
-    load();
+    try {
+      const adminToken = localStorage.getItem('adminToken');
+      await deleteBanner(id, adminToken);
+      load();
+    } catch {
+      setError('Delete failed');
+    }
   };
 
   return (
@@ -99,10 +106,7 @@ export default function BannerPage() {
         <div className="banner-list">
           {banners.map((b) => (
             <div key={b._id} className="banner-item">
-              <img
-                src={b.image}
-                alt={b.text || 'Banner'}
-              />
+              <img src={b.image} alt={b.text || 'Banner'} />
               {b.text && <p>{b.text}</p>}
               {b.link && (
                 <p>
