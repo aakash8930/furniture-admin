@@ -38,3 +38,6 @@ updated the UI
 - Fix Banner Uploading
 - Fix Login
 - Fix Navbar in Orders
+
+- v 1.0.9
+- Dashboard UI and Add/Edit Product Update 

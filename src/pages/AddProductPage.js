@@ -5,11 +5,12 @@ import AdminNavbar from './Navbar';
 import ProductPage from './Product';
 
 const CATEGORY_OPTIONS = [
-  "Living room furniture", "Bedroom furniture", "Dining room furniture",
-  "Accent Chairs", "Customized recliners", "Cookware", "Storage & Containers",
-  "Kitchenware", "Kitchen Linens", "Serveware", "Crockery", "Dinner sets",
-  "Table Linen", "Cutlery", "Home Accessories", "Lighting", "Wall Decor",
-  "Fragrances", "Garden", "Bedding", "Curtains", "Cushions", "Floor coverings", "Accessories"
+  "SALE", "BEDROOM", "LIVING ROOM",
+  "DINING", "OFFICE", "TABLEWARE", "OUTDOOR",
+  "DECOR",
+  //  "Kitchen Linens", "Serveware", "Crockery", "Dinner sets",
+  // "Table Linen", "Cutlery", "Home Accessories", "Lighting", "Wall Decor",
+  // "Fragrances", "Garden", "Bedding", "Curtains", "Cushions", "Floor coverings", "Accessories"
 ];
 
 const AddProductPage = () => {

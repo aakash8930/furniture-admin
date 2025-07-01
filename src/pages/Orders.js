@@ -22,7 +22,7 @@ export default function AdminOrdersPage() {
         if (!token) throw new Error('Not authenticated as admin');
 
         const data = await fetchAllOrders(token);
-        setOrders(data);
+        setOrders(Array.isArray(data) ? data : []);
       } catch (err) {
         console.error('Failed to load orders (admin):', err);
         const msg =
@@ -48,48 +48,50 @@ export default function AdminOrdersPage() {
           <p className="center">No orders found.</p>
         )}
 
-        {!loading && !error && orders.map((order) => (
-          <div key={order._id} className="order-card">
-            <div className="order-card-header">
-              <div>
-                <strong>Order ID:</strong> {order.orderId || order._id}
-              </div>
-              <div>
-                <strong>Date:</strong>{' '}
-                {new Date(order.createdAt).toLocaleDateString()}{' '}
-                {new Date(order.createdAt).toLocaleTimeString()}
-              </div>
-              <div>
-                <strong>Status:</strong>{' '}
-                <span className={`order-status status-${order.status.toLowerCase()}`}>
-                  {order.status}
-                </span>
-              </div>
-              <button
-                className="view-order-btn"
-                onClick={() => navigate(`/admin/orders/${order._id}`)}
-              >
-                View Details
-              </button>
-            </div>
-
-            <div className="order-products-grid">
-              {order.products.map(({ product, quantity }) => (
-                <div key={product._id} className="product-cell">
-                  <img
-                    src={product.imageUrl || '/images/placeholder.jpg'}
-                    alt={product.name}
-                    className="product-thumb"
-                  />
-                  <div className="product-info">
-                    <p className="product-name">{product.name}</p>
-                    <p className="product-qty">x{quantity}</p>
-                  </div>
+        {!loading && !error && orders
+          .filter(order => order && order._id)
+          .map((order) => (
+            <div key={order._id} className="order-card">
+              <div className="order-card-header">
+                <div>
+                  <strong>Order ID:</strong> {order.orderId || order._id}
                 </div>
-              ))}
+                <div>
+                  <strong>Date:</strong>{' '}
+                  {new Date(order.createdAt).toLocaleDateString()}{' '}
+                  {new Date(order.createdAt).toLocaleTimeString()}
+                </div>
+                <div>
+                  <strong>Status:</strong>{' '}
+                  <span className={`order-status status-${order.status?.toLowerCase() || 'unknown'}`}>
+                    {order.status || 'Unknown'}
+                  </span>
+                </div>
+                <button
+                  className="view-order-btn"
+                  onClick={() => navigate(`/admin/orders/${order._id}`)}
+                >
+                  View Details
+                </button>
+              </div>
+
+              <div className="order-products-grid">
+                {(order.products || []).map(({ product, quantity }, idx) => (
+                  <div key={product?._id || idx} className="product-cell">
+                    <img
+                      src={product?.imageUrl || '/images/placeholder.jpg'}
+                      alt={product?.name || 'Unnamed'}
+                      className="product-thumb"
+                    />
+                    <div className="product-info">
+                      <p className="product-name">{product?.name || 'Unnamed Product'}</p>
+                      <p className="product-qty">x{quantity}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
     </>
   );

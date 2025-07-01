@@ -222,9 +222,9 @@ const CouponPage = () => {
               onSubmit={
                 editingId
                   ? (e) => {
-                      e.preventDefault();
-                      saveEdit(editingId);
-                    }
+                    e.preventDefault();
+                    saveEdit(editingId);
+                  }
                   : handleSubmit
               }
               className="coupon-form"
@@ -353,7 +353,7 @@ const CouponPage = () => {
                       type="button"
                       onClick={cancelEdit}
                       className="cancel-btn"
-                      style={{ marginLeft: '0.5rem', backgroundColor: '#f87171' }}
+
                     >
                       Cancel
                     </button>

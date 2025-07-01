@@ -23,6 +23,12 @@ export default function AdminNavbar() {
   return (
     <header className="navbar">
       <nav className="navbar__nav">
+        <div>
+          <h1 className='logo'>
+            
+            Furniture
+          </h1>
+        </div>
         <NavLink
           to="/admin/banners"
           className={({ isActive }) =>
