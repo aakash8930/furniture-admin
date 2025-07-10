@@ -1,6 +1,7 @@
-/* src/css/Product.css */
+*{
+  margin: 0;
+}
 
-/* General Page Setup */
 .product-page {
   min-height: 100vh;
   padding: 1.5rem 2rem;
