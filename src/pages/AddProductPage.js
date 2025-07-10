@@ -1,16 +1,14 @@
+// src/pages/AddProductPage.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createProduct } from '../api/ProductApi';
 import AdminNavbar from './Navbar';
-import ProductPage from './Product';
+import '../css/AddProductPage.css'; // Import the new CSS file
 
 const CATEGORY_OPTIONS = [
   "SALE", "BEDROOM", "LIVING ROOM",
   "DINING", "OFFICE", "TABLEWARE", "OUTDOOR",
   "DECOR",
-  //  "Kitchen Linens", "Serveware", "Crockery", "Dinner sets",
-  // "Table Linen", "Cutlery", "Home Accessories", "Lighting", "Wall Decor",
-  // "Fragrances", "Garden", "Bedding", "Curtains", "Cushions", "Floor coverings", "Accessories"
 ];
 
 const AddProductPage = () => {
@@ -42,60 +40,69 @@ const AddProductPage = () => {
 
   return (
     <>
-      <AdminNavbar Products={ProductPage} />
-      <div style={outerContainerStyle}>
-        <div style={cardStyle}>
-          <h2 style={headingStyle}>🪑 Add New Product</h2>
-          <form onSubmit={handleSubmit} style={formStyle}>
-            <FormInput label="Name" name="name" value={form.name} onChange={handleChange} />
-            <FormInput label="Price" name="price" type="number" value={form.price} onChange={handleChange} />
-            <FormInput label="Stock" name="stock" type="number" value={form.stock} onChange={handleChange} />
-            <FormInput label="Discount (%)" name="discount" type="number" value={form.discount} onChange={handleChange} />
+      <AdminNavbar />
+      <div className="add-product-page">
+        <div className="add-product-card">
+          <div className="card-header">
+            <h2 className="heading">🪑 Add New Product</h2>
+          </div>
+          <form onSubmit={handleSubmit} className="add-product-form">
+            <div className="form-row">
+              <FormInput label="Name" name="name" value={form.name} onChange={handleChange} />
+              <FormInput label="Price" name="price" type="number" value={form.price} onChange={handleChange} />
+            </div>
+            <div className="form-row">
+              <FormInput label="Stock" name="stock" type="number" value={form.stock} onChange={handleChange} />
+              <FormInput label="Discount (%)" name="discount" type="number" value={form.discount} onChange={handleChange} />
+            </div>
 
-            <div style={{ gridColumn: 'span 2' }}>
-              <label style={labelStyle}>Category</label>
-              <select name="category" value={form.category} onChange={handleChange} style={inputStyle}>
+            <div className="form-group full-width">
+              <label>Category</label>
+              <select name="category" value={form.category} onChange={handleChange}>
                 {CATEGORY_OPTIONS.map(opt => (
                   <option key={opt} value={opt}>{opt}</option>
                 ))}
               </select>
             </div>
 
-            <div style={{ gridColumn: 'span 2' }}>
-              <label style={labelStyle}>Description</label>
+            <div className="form-group full-width">
+              <label>Description</label>
               <textarea
                 name="details"
                 value={form.details}
                 onChange={handleChange}
                 placeholder="Product details..."
-                style={textareaStyle}
                 rows={4}
               />
             </div>
 
-            <div style={{ gridColumn: 'span 2' }}>
-              <label style={labelStyle}>Upload Images</label>
-              <div style={imageGridStyle}>
+            {/* **FIXED**: This section now displays the filename */}
+            <div className="form-group full-width">
+              <label>Upload Images</label>
+              <div className="image-grid">
                 {[1, 2, 3, 4, 5].map(i => (
-                  <input
-                    key={i}
-                    name={`image${i}`}
-                    type="file"
-                    accept="image/*"
-                    onChange={handleChange}
-                    style={fileInputStyle}
-                  />
+                  <div key={i} className="file-input-container">
+                    <label htmlFor={`image-input-${i}`} className="file-input-label">
+                      Choose File
+                    </label>
+                    <input
+                      id={`image-input-${i}`}
+                      name={`image${i}`}
+                      type="file"
+                      accept="image/*"
+                      className="file-input-hidden"
+                      onChange={handleChange}
+                    />
+                    <span className="file-name-display">
+                      {form[`image${i}`] ? form[`image${i}`].name : 'No file chosen'}
+                    </span>
+                  </div>
                 ))}
               </div>
             </div>
 
-            <div style={{ gridColumn: 'span 2', textAlign: 'center' }}>
-              <button
-                type="submit"
-                style={submitBtnStyle}
-                onMouseEnter={(e) => e.target.style.transform = 'scale(1.03)'}
-                onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
-              >
+            <div className="form-group full-width text-center">
+              <button type="submit" className="submit-btn">
                 Create Product
               </button>
             </div>
@@ -107,95 +114,10 @@ const AddProductPage = () => {
 };
 
 const FormInput = ({ label, ...props }) => (
-  <div>
-    <label style={labelStyle}>{label}</label>
-    <input {...props} required style={inputStyle} />
+  <div className="form-group">
+    <label>{label}</label>
+    <input {...props} required />
   </div>
 );
-
-// Styles
-
-const outerContainerStyle = {
-  minHeight: '100vh',
-  padding: '2rem',
-  background: 'linear-gradient(to bottom right, #e0f2fe, #f8fafc)',
-};
-
-const cardStyle = {
-  padding: '2rem',
-  maxWidth: '720px',
-  margin: 'auto',
-  background: 'rgba(255, 255, 255, 0.75)',
-  backdropFilter: 'blur(20px)',
-  borderRadius: '20px',
-  boxShadow: '0 20px 60px rgba(0, 0, 0, 0.05)',
-  border: '1px solid rgba(203, 213, 225, 0.4)',
-};
-
-const headingStyle = {
-  fontSize: '1.8rem',
-  fontWeight: '700',
-  marginBottom: '1.5rem',
-  color: '#1f2937',
-  textAlign: 'center',
-};
-
-const formStyle = {
-  display: 'grid',
-  gridTemplateColumns: '1fr 1fr',
-  gap: '1.5rem',
-};
-
-const labelStyle = {
-  fontSize: '0.95rem',
-  fontWeight: '500',
-  color: '#1f2937',
-  marginBottom: '6px',
-  display: 'block',
-};
-
-const inputStyle = {
-  width: '100%',
-  padding: '10px 14px',
-  borderRadius: '10px',
-  border: '1px solid #d1d5db',
-  fontSize: '0.95rem',
-  backgroundColor: '#f9fafb',
-  transition: 'border 0.2s ease',
-};
-
-const textareaStyle = {
-  ...inputStyle,
-  resize: 'vertical',
-};
-
-const fileInputStyle = {
-  padding: '10px 12px',
-  borderRadius: '10px',
-  border: '1px solid #e2e8f0',
-  background: '#f1f5f9',
-  fontSize: '0.9rem',
-  cursor: 'pointer',
-};
-
-const imageGridStyle = {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
-  gap: '0.75rem',
-};
-
-const submitBtnStyle = {
-  padding: '14px 28px',
-  background: 'linear-gradient(to right, #3b82f6, #2563eb)',
-  color: '#fff',
-  border: 'none',
-  borderRadius: '14px',
-  fontWeight: '600',
-  fontSize: '1rem',
-  cursor: 'pointer',
-  transition: 'transform 0.2s ease, box-shadow 0.3s ease',
-  boxShadow: '0 6px 18px rgba(59, 130, 246, 0.35)',
-  textAlign: 'center',
-};
 
 export default AddProductPage;

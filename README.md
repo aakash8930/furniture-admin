@@ -41,3 +41,8 @@ updated the UI
 
 - v 1.0.9
 - Dashboard UI and Add/Edit Product Update 
+
+- v 1.1.0
+- Login Page UI
+- Coupons UI [dropdown and separate pages for new and existing coupons]
+- Products Page [Product Card, Add new, Edit Details, View details]

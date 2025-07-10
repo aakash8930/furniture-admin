@@ -3,15 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fetchProductById, updateProduct } from '../api/ProductApi';
 import AdminNavbar from './Navbar';
-import ProductPage from './Product';
+import '../css/EditProductPage.css'; // Import the new CSS file
 
 const CATEGORY_OPTIONS = [
   "SALE", "BEDROOM", "LIVING ROOM",
   "DINING", "OFFICE", "TABLEWARE", "OUTDOOR",
   "DECOR",
-  //  "Kitchen Linens", "Serveware", "Crockery", "Dinner sets",
-  // "Table Linen", "Cutlery", "Home Accessories", "Lighting", "Wall Decor",
-  // "Fragrances", "Garden", "Bedding", "Curtains", "Cushions", "Floor coverings", "Accessories"
 ];
 
 const EditProductPage = () => {
@@ -61,34 +58,70 @@ const EditProductPage = () => {
 
   return (
     <>
-      <AdminNavbar Products={ProductPage} />
-      <div style={{ padding: '1rem' }}>
-        <h2>Edit Product</h2>
-        <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '0.75rem', maxWidth: 400 }}>
-          <label>Name</label>
-          <input name="name" value={form.name} onChange={handleChange} required />
-          <label>Category</label>
-          <select name="category" value={form.category} onChange={handleChange} required>
-            {CATEGORY_OPTIONS.map(opt => (
-              <option key={opt} value={opt}>{opt}</option>
-            ))}
-          </select>
-          <label>Price</label>
-          <input name="price" value={form.price} type="number" onChange={handleChange} required />
-          <label>Stock</label>
-          <input name="stock" value={form.stock} type="number" onChange={handleChange} required />
-          <label>Discount</label>
-          <input name="discount" value={form.discount} type="number" onChange={handleChange} />
-          <label>Description</label>
-          <textarea name="details" value={form.details} onChange={handleChange} rows={3} />
-          <label>Images</label>
-          <label>Image 1: <input name="image1" type="file" accept="image/*" onChange={handleChange} /></label>
-          <label>Image 2: <input name="image2" type="file" accept="image/*" onChange={handleChange} /></label>
-          <label>Image 3: <input name="image3" type="file" accept="image/*" onChange={handleChange} /></label>
-          <label>Image 4: <input name="image4" type="file" accept="image/*" onChange={handleChange} /></label>
-          <label>Image 5: <input name="image5" type="file" accept="image/*" onChange={handleChange} /></label>
+      <AdminNavbar />
+      <div className="edit-product-page">
+        <form onSubmit={handleSubmit} className="edit-product-form">
+          <h2>Edit Product</h2>
 
-          <button type="submit" style={{ padding: '0.5rem' }}>Save Changes</button>
+          <div className="form-group">
+            <label>Name</label>
+            <input name="name" value={form.name} onChange={handleChange} required />
+          </div>
+
+          <div className="form-group">
+            <label>Category</label>
+            <select name="category" value={form.category} onChange={handleChange} required>
+              {CATEGORY_OPTIONS.map(opt => (
+                <option key={opt} value={opt}>{opt}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label>Price</label>
+            <input name="price" value={form.price} type="number" onChange={handleChange} required />
+          </div>
+
+          <div className="form-group">
+            <label>Stock</label>
+            <input name="stock" value={form.stock} type="number" onChange={handleChange} required />
+          </div>
+
+          <div className="form-group">
+            <label>Discount</label>
+            <input name="discount" value={form.discount} type="number" onChange={handleChange} />
+          </div>
+
+          <div className="form-group">
+            <label>Description</label>
+            <textarea name="details" value={form.details} onChange={handleChange} />
+          </div>
+
+          <div className="form-group image-upload-group">
+            <label className="group-title">Images (Optional: only upload to replace existing ones)</label>
+            <div className="image-input-row">
+              <label htmlFor="image1">Image 1:</label>
+              <input id="image1" name="image1" type="file" accept="image/*" onChange={handleChange} />
+            </div>
+            <div className="image-input-row">
+              <label htmlFor="image2">Image 2:</label>
+              <input id="image2" name="image2" type="file" accept="image/*" onChange={handleChange} />
+            </div>
+            <div className="image-input-row">
+              <label htmlFor="image3">Image 3:</label>
+              <input id="image3" name="image3" type="file" accept="image/*" onChange={handleChange} />
+            </div>
+            <div className="image-input-row">
+              <label htmlFor="image4">Image 4:</label>
+              <input id="image4" name="image4" type="file" accept="image/*" onChange={handleChange} />
+            </div>
+            <div className="image-input-row">
+              <label htmlFor="image5">Image 5:</label>
+              <input id="image5" name="image5" type="file" accept="image/*" onChange={handleChange} />
+            </div>
+          </div>
+
+          <button type="submit" className="submit-btn">Save Changes</button>
         </form>
       </div>
     </>

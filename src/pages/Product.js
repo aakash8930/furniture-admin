@@ -1,20 +1,40 @@
-// src/components/ProductPage.jsx
+// src/pages/ProductPage.jsx
 
 import React, { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom'; // <-- import Link
+import { useNavigate, Link } from 'react-router-dom';
 import {
   fetchAllProducts,
   deleteProduct as apiDeleteProduct,
 } from '../api/ProductApi';
-import AdminNavbar from './Navbar';
-import '../css/Product.css';
+import AdminNavbar from '../pages/Navbar.js';
+import '../css/Product.css'; // Ensure this path is correct
+
+// A simple trash icon component
+const TrashIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <polyline points="3 6 5 6 21 6"></polyline>
+    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+    <line x1="10" y1="11" x2="10" y2="17"></line>
+    <line x1="14" y1="11" x2="14" y2="17"></line>
+  </svg>
+);
 
 const ProductPage = () => {
   const [products, setProducts] = useState([]);
   const [query, setQuery] = useState('');
-  const [hoveredCard, setHoveredCard] = useState(null);
   const navigate = useNavigate();
 
+  // --- Load all products on initial render ---
   useEffect(() => {
     const loadProducts = async () => {
       try {
@@ -27,14 +47,16 @@ const ProductPage = () => {
     loadProducts();
   }, []);
 
+  // --- Filter products based on search query ---
   const filtered = products.filter(
     p =>
-      p.name.toLowerCase().includes(query.toLowerCase()) ||
-      p.category.toLowerCase().includes(query.toLowerCase())
+      (p.name && p.name.toLowerCase().includes(query.toLowerCase())) ||
+      (p.category && p.category.toLowerCase().includes(query.toLowerCase()))
   );
 
+  // --- API Handlers ---
   const handleDelete = async id => {
-    if (!window.confirm('Delete this product?')) return;
+    if (!window.confirm('Are you sure you want to delete this product?')) return;
     try {
       await apiDeleteProduct(id);
       setProducts(products.filter(p => p._id !== id));
@@ -51,79 +73,71 @@ const ProductPage = () => {
     <>
       <AdminNavbar />
       <div className="product-page">
-        <h2 className="product-heading">🛒 Manage Products</h2>
+        <h2 className="product-heading">Manage Products</h2>
 
         <div className="product-controls">
           <button
+            className="btn btn-add-product"
             onClick={() => navigate('/admin/products/add')}
-            style={buttonStyle}
           >
             + Add Product
           </button>
           <input
             type="text"
+            className="product-search"
             placeholder="Search by name or category..."
             value={query}
             onChange={e => setQuery(e.target.value)}
-            style={searchStyle}
           />
         </div>
 
         <div className="product-grid">
           {filtered.map(p => (
-            <div
-              key={p._id}
-              style={{
-                ...cardStyle,
-                transform:
-                  hoveredCard === p._id ? 'scale(1.03)' : 'scale(1)',
-                boxShadow:
-                  hoveredCard === p._id
-                    ? '0 16px 40px rgba(0, 0, 0, 0.08)'
-                    : '0 8px 30px rgba(0, 0, 0, 0.05)',
-              }}
-              onMouseEnter={() => setHoveredCard(p._id)}
-              onMouseLeave={() => setHoveredCard(null)}
-            >
-              <div style={imageContainerStyle}>
-                {p.images?.image1 ? (
+            <div key={p._id} className="product-card">
+              <div className="product-image-wrapper">
+                {p.images?.image1?.data ? (
                   <img
                     src={`data:${p.images.image1.contentType};base64,${p.images.image1.data}`}
                     alt={p.name}
-                    style={imageStyle}
+                    className="product-image"
                   />
                 ) : (
-                  <div style={placeholderStyle}>No Image</div>
+                  <div className="product-image-placeholder">No Image</div>
                 )}
               </div>
-              <h3 style={{ margin: '0.5rem 0' }}>{p.name}</h3>
-              <p style={{ margin: '0.25rem 0', color: '#555' }}>
-                {p.category}
-              </p>
-              <p style={{ margin: '0.25rem 0', fontWeight: 'bold' }}>
-                ₹{p.price.toFixed(2)}
-              </p>
-              <p style={{ margin: '0.25rem 0' }}>Stock: {p.stock}</p>
-              <div style={{ marginTop: '0.5rem', display: 'flex' }}>
-                <button
-                  onClick={() => handleEdit(p._id)}
-                  style={editBtnStyle}
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDelete(p._id)}
-                  style={deleteBtnStyle}
-                >
-                  Delete
-                </button>
-                {/* New “View Details” button */}
-                <Link
-                  to={`/admin/products/${p._id}`}
-                  style={detailsBtnStyle}
-                >
-                  View Details
-                </Link>
+
+              <div className="product-content">
+                <div className="product-info">
+                  <h3 className="product-name">{p.name}</h3>
+                  <p className="product-category">{p.category}</p>
+                  <p className="product-price">₹{p.price.toFixed(2)}</p>
+                  <div className="product-stock">
+                    <span className={`stock-dot ${p.stock > 0 ? 'in-stock' : 'out-of-stock'}`}></span>
+                    {p.stock > 0 ? `In Stock: ${p.stock} units` : 'Out of Stock'}
+                  </div>
+                </div>
+
+                <div className="product-actions">
+                  <button
+                    onClick={() => handleEdit(p._id)}
+                    className="btn btn-edit"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(p._id)}
+                    className="btn btn-delete"
+                  >
+                    <TrashIcon />
+                    Delete
+                  </button>
+                  <Link
+                    to={`/admin/products/${p._id}`}
+                    className="btn btn-details"
+                  >
+                    View Details
+                  </Link>
+                </div>
               </div>
             </div>
           ))}
@@ -132,108 +146,6 @@ const ProductPage = () => {
       </div>
     </>
   );
-};
-
-// Styles (same as before, plus “View Details” button style)
-const buttonStyle = {
-  padding: '10px 20px',
-  background: 'linear-gradient(to right, #60a5fa, #3b82f6)',
-  color: '#fff',
-  border: 'none',
-  borderRadius: '12px',
-  fontWeight: '600',
-  fontSize: '0.95rem',
-  cursor: 'pointer',
-  transition: '0.3s ease',
-  boxShadow: '0 4px 14px rgba(59, 130, 246, 0.25)',
-};
-
-const searchStyle = {
-  flexGrow: 1,
-  marginLeft: '1rem',
-  padding: '10px 16px',
-  borderRadius: '12px',
-  border: '1px solid #d1d5db',
-  fontSize: '0.95rem',
-  background: 'rgba(255,255,255,0.7)',
-  backdropFilter: 'blur(10px)',
-  boxShadow: '0 2px 6px rgba(0, 0, 0, 0.04)',
-};
-
-const cardStyle = {
-  background: 'rgba(255, 255, 255, 0.6)',
-  borderRadius: '16px',
-  backdropFilter: 'blur(16px)',
-  padding: '1.5rem',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  border: '1px solid rgba(203, 213, 225, 0.4)',
-  transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-};
-
-const imageContainerStyle = {
-  width: '100%',
-  paddingTop: '75%',
-  position: 'relative',
-  overflow: 'hidden',
-  borderRadius: '12px',
-  background: '#f1f5f9',
-  boxShadow: 'inset 0 0 6px rgba(0,0,0,0.05)',
-};
-
-const imageStyle = {
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  objectFit: 'cover',
-};
-
-const placeholderStyle = {
-  ...imageContainerStyle,
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  color: '#9ca3af',
-  fontStyle: 'italic',
-};
-
-const editBtnStyle = {
-  padding: '6px 14px',
-  background: '#10b981',
-  color: '#fff',
-  fontSize: '0.85rem',
-  fontWeight: '600',
-  border: 'none',
-  borderRadius: '8px',
-  cursor: 'pointer',
-  boxShadow: '0 2px 10px rgba(16, 185, 129, 0.2)',
-};
-
-const deleteBtnStyle = {
-  ...editBtnStyle,
-  background: '#ef4444',
-  marginLeft: '0.5rem',
-  boxShadow: '0 2px 10px rgba(239, 68, 68, 0.2)',
-};
-
-const detailsBtnStyle = {
-  padding: '6px 14px',
-  background: '#3b82f6',
-  color: '#fff',
-  fontSize: '0.85rem',
-  fontWeight: '600',
-  border: 'none',
-  borderRadius: '8px',
-  cursor: 'pointer',
-  marginLeft: '0.5rem',
-  boxShadow: '0 2px 10px rgba(59, 130, 246, 0.2)',
-  textDecoration: 'none',
-  display: 'inline-flex',
-  alignItems: 'center',
-  justifyContent: 'center',
 };
 
 export default ProductPage;
