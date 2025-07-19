@@ -4,8 +4,8 @@
 
 .product-page {
   min-height: 100vh;
-  padding: 3rem 2rem;
-  background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+  padding: 1.5rem 2rem;
+  background-color: #f8f9fa; /* A light grey background */
   font-family: 'Inter', 'Segoe UI', sans-serif;
   display: flex;
   flex-direction: column;
@@ -15,11 +15,9 @@
 .product-heading {
   font-size: 2.25rem;
   font-weight: 700;
-  color: #0f172a;
+  color: #1a202c;
   margin-bottom: 2rem;
-  border-left: 6px solid #3b82f6;
-  padding-left: 1rem;
-  letter-spacing: 0.3px;
+  text-align: center;
   width: 100%;
   max-width: 1200px;
 }
@@ -29,15 +27,230 @@
   max-width: 1200px;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 1rem;
+  align-items: center;
+  margin-bottom: 2.5rem;
   gap: 1rem;
 }
 
+.product-search {
+  flex-grow: 1;
+  max-width: 400px;
+  padding: 12px 18px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  font-size: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-search:focus {
+  outline: none;
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+}
+
+/* **FIXED**: Reduced card min-width and gap for a tighter layout */
 .product-grid {
   width: 100%;
   max-width: 1200px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 1.5rem;
-  padding-top: 1rem;
+  justify-content: flex-start;
+}
+
+/* Keyframes for Animations */
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes stock-glow {
+  0%, 100% {
+    box-shadow: 0 0 2px 0px rgba(72, 187, 120, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 6px 2px rgba(72, 187, 120, 0.9);
+  }
+}
+
+/* New Product Card Styling */
+.product-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: card-enter 0.5s ease-out forwards;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* **FIXED**: Reduced image height */
+.product-image-wrapper {
+  height: 180px;
+  background-color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-image-placeholder {
+  color: #a0aec0;
+  font-style: italic;
+}
+
+/* **FIXED**: This is now the main flex container for the text and buttons */
+.product-content {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* This makes the content area fill the remaining space */
+}
+
+/* **FIXED**: This div will now grow, pushing the actions to the bottom */
+.product-info {
+    background: #fff!important;
+    padding: 0.5rem!important;
+    border-radius: 8px!important;
+    margin-bottom: 0rem!important;
+  flex-grow: 1;
+}
+
+/* **FIXED**: Reduced font sizes for a more compact look */
+.product-name {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin: 0 0 0.25rem 0;
+}
+
+.product-category {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #718096;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 0.75rem 0;
+}
+
+.product-price {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin: 0 0 0.75rem 0;
+}
+
+.product-stock {
+  display: flex;
+  align-items: center;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #4a5568;
+}
+
+.stock-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.stock-dot.in-stock {
+  background-color: #48bb78; /* Green */
+  animation: stock-glow 2.5s infinite ease-in-out;
+}
+
+.stock-dot.out-of-stock {
+  background-color: #ef4444; /* Red */
+}
+
+/* **FIXED**: Added flex-wrap to allow buttons to wrap to the next line */
+.product-actions {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap; /* Allows wrapping */
+  gap: 0.5rem;
+}
+
+/* **FIXED**: Smaller, more refined buttons */
+.btn {
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* flex-grow is removed so buttons don't expand automatically */
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+.btn-add-product {
+  background: #3182ce;
+  color: white;
+  border-color: #3182ce;
+}
+.btn-add-product:hover {
+  background: #2b6cb0;
+}
+
+/* **FIXED**: Edit and Delete buttons will now share the first row */
+.btn-edit, .btn-delete {
+    width: 7.55rem; /* Makes them share the space on their line */
+}
+
+.btn-edit {
+  background-color: #2d3748;
+  color: white;
+}
+.btn-edit:hover {
+  background-color: #1a202c;
+}
+
+.btn-delete {
+  background-color: #f7fafc;
+  color: #e53e3e;
+  border: 1px solid #e2e8f0;
+  gap: 0.5rem;
+}
+.btn-delete:hover {
+  background-color: #fff5f5;
+  border-color: #fed7d7;
+  color: #c53030;
+}
+
+/* **FIXED**: View Details button will take up the full width, forcing it to the next line */
+.btn-details {
+  background-color: #f7fafc;
+  color: #2d3748;
+  border: 1px solid #e2e8f0;
+  width: 100%; /* Takes up the full width */
+}
+.btn-details:hover {
+  background-color: #edf2f7;
 }

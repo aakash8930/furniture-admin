@@ -1,7 +1,9 @@
+// src/pages/AddProductPage.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createProduct } from '../api/ProductApi';
 import AdminNavbar from './Navbar';
+<<<<<<< HEAD
 
 // This map is needed for the dynamic sub-category dropdown
 const SUBCATEGORY_MAP = {
@@ -16,6 +18,9 @@ const SUBCATEGORY_MAP = {
 };
 
 const COLOR_OPTIONS = ['Brown', 'Beige', 'Black', 'White'];
+=======
+import '../css/AddProductPage.css'; // Import the new CSS file
+>>>>>>> ad4662a73243429efa03b2904789156a90c37d8b
 
 const CATEGORY_OPTIONS = [
   "SALE", "BEDROOM", "LIVING ROOM",
@@ -108,9 +113,10 @@ const AddProductPage = () => {
               <textarea name="details" value={form.details} onChange={handleChange} style={textareaStyle} rows={4} />
             </div>
 
-            <div style={{ gridColumn: 'span 2' }}>
-              <label style={labelStyle}>Upload Images</label>
-              <div style={imageGridStyle}>
+            {/* **FIXED**: This section now displays the filename */}
+            <div className="form-group full-width">
+              <label>Upload Images</label>
+              <div className="image-grid">
                 {[1, 2, 3, 4, 5].map(i => (
                   <input key={i} name={`image${i}`} type="file" accept="image/*" onChange={handleChange} style={fileInputStyle} />
                 ))}
@@ -134,9 +140,9 @@ const AddProductPage = () => {
 // ===================================================================
 
 const FormInput = ({ label, ...props }) => (
-  <div>
-    <label style={labelStyle}>{label}</label>
-    <input {...props} required style={inputStyle} />
+  <div className="form-group">
+    <label>{label}</label>
+    <input {...props} required />
   </div>
 );
 
