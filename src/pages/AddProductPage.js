@@ -2,31 +2,51 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createProduct } from '../api/ProductApi';
 import AdminNavbar from './Navbar';
-import ProductPage from './Product';
+
+// This map is needed for the dynamic sub-category dropdown
+const SUBCATEGORY_MAP = {
+  'BEDROOM': ['Beds', 'Wardrobes', 'Nightstands', 'Dressers'],
+  'LIVING ROOM': ['Sofas', 'Coffee Tables', 'TV Units', 'Accent Chairs'],
+  'DINING': ['Dining Tables', 'Dining Chairs', 'Sideboards', 'Bar Cabinets'],
+  'OFFICE': ['Work Desks', 'Office Chairs', 'Bookshelves'],
+  'TABLEWARE': ['Dinnerware', 'Serveware', 'Cutlery', 'Glassware'],
+  'OUTDOOR': ['Outdoor Seating', 'Patio Tables', 'Garden Decor'],
+  'DECOR': ['Vases', 'Lamps', 'Rugs', 'Wall Art'],
+  'SALE': [],
+};
+
+const COLOR_OPTIONS = ['Brown', 'Beige', 'Black', 'White'];
 
 const CATEGORY_OPTIONS = [
   "SALE", "BEDROOM", "LIVING ROOM",
   "DINING", "OFFICE", "TABLEWARE", "OUTDOOR",
   "DECOR",
-  //  "Kitchen Linens", "Serveware", "Crockery", "Dinner sets",
-  // "Table Linen", "Cutlery", "Home Accessories", "Lighting", "Wall Decor",
-  // "Fragrances", "Garden", "Bedding", "Curtains", "Cushions", "Floor coverings", "Accessories"
 ];
 
 const AddProductPage = () => {
   const [form, setForm] = useState({
-    name: '', category: CATEGORY_OPTIONS[0], price: '', stock: '', discount: '',
-    details: '', image1: null, image2: null, image3: null, image4: null, image5: null,
+    name: '', category: CATEGORY_OPTIONS[0], subCategory: '', color: '',
+    price: '', stock: '', discount: '', details: '',
+    image1: null, image2: null, image3: null, image4: null, image5: null,
   });
 
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    setForm(prev => ({
-      ...prev,
-      [name]: files ? files[0] : value
-    }));
+    
+    if (name === 'category') {
+        setForm(prev => ({
+            ...prev,
+            category: value,
+            subCategory: ''
+        }));
+    } else {
+        setForm(prev => ({
+            ...prev,
+            [name]: files ? files[0] : value
+        }));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -39,10 +59,12 @@ const AddProductPage = () => {
       alert(err.response?.data?.message || "Failed to add product");
     }
   };
+  
+  const currentSubCategories = SUBCATEGORY_MAP[form.category] || [];
 
   return (
     <>
-      <AdminNavbar Products={ProductPage} />
+      <AdminNavbar />
       <div style={outerContainerStyle}>
         <div style={cardStyle}>
           <h2 style={headingStyle}>🪑 Add New Product</h2>
@@ -52,7 +74,7 @@ const AddProductPage = () => {
             <FormInput label="Stock" name="stock" type="number" value={form.stock} onChange={handleChange} />
             <FormInput label="Discount (%)" name="discount" type="number" value={form.discount} onChange={handleChange} />
 
-            <div style={{ gridColumn: 'span 2' }}>
+            <div>
               <label style={labelStyle}>Category</label>
               <select name="category" value={form.category} onChange={handleChange} style={inputStyle}>
                 {CATEGORY_OPTIONS.map(opt => (
@@ -61,43 +83,42 @@ const AddProductPage = () => {
               </select>
             </div>
 
+            <div>
+              <label style={labelStyle}>Sub-Category</label>
+              <select name="subCategory" value={form.subCategory} onChange={handleChange} style={inputStyle} disabled={currentSubCategories.length === 0}>
+                <option value="">-- Select Sub-Category --</option>
+                {currentSubCategories.map(opt => (
+                  <option key={opt} value={opt}>{opt}</option>
+                ))}
+              </select>
+            </div>
+            
+            <div style={{ gridColumn: 'span 2' }}>
+              <label style={labelStyle}>Color / Finish</label>
+              <select name="color" value={form.color} onChange={handleChange} style={inputStyle}>
+                <option value="">-- Select Color --</option>
+                {COLOR_OPTIONS.map(opt => (
+                  <option key={opt} value={opt}>{opt}</option>
+                ))}
+              </select>
+            </div>
+
             <div style={{ gridColumn: 'span 2' }}>
               <label style={labelStyle}>Description</label>
-              <textarea
-                name="details"
-                value={form.details}
-                onChange={handleChange}
-                placeholder="Product details..."
-                style={textareaStyle}
-                rows={4}
-              />
+              <textarea name="details" value={form.details} onChange={handleChange} style={textareaStyle} rows={4} />
             </div>
 
             <div style={{ gridColumn: 'span 2' }}>
               <label style={labelStyle}>Upload Images</label>
               <div style={imageGridStyle}>
                 {[1, 2, 3, 4, 5].map(i => (
-                  <input
-                    key={i}
-                    name={`image${i}`}
-                    type="file"
-                    accept="image/*"
-                    onChange={handleChange}
-                    style={fileInputStyle}
-                  />
+                  <input key={i} name={`image${i}`} type="file" accept="image/*" onChange={handleChange} style={fileInputStyle} />
                 ))}
               </div>
             </div>
 
             <div style={{ gridColumn: 'span 2', textAlign: 'center' }}>
-              <button
-                type="submit"
-                style={submitBtnStyle}
-                onMouseEnter={(e) => e.target.style.transform = 'scale(1.03)'}
-                onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
-              >
-                Create Product
-              </button>
+              <button type="submit" style={submitBtnStyle}>Create Product</button>
             </div>
           </form>
         </div>
@@ -106,14 +127,18 @@ const AddProductPage = () => {
   );
 };
 
+
+// ===================================================================
+// THIS IS THE SECTION THAT WAS INCORRECT IN YOUR FILE
+// Helper component and style objects must be fully defined.
+// ===================================================================
+
 const FormInput = ({ label, ...props }) => (
   <div>
     <label style={labelStyle}>{label}</label>
     <input {...props} required style={inputStyle} />
   </div>
 );
-
-// Styles
 
 const outerContainerStyle = {
   minHeight: '100vh',
@@ -162,6 +187,7 @@ const inputStyle = {
   fontSize: '0.95rem',
   backgroundColor: '#f9fafb',
   transition: 'border 0.2s ease',
+  boxSizing: 'border-box'
 };
 
 const textareaStyle = {
@@ -176,6 +202,7 @@ const fileInputStyle = {
   background: '#f1f5f9',
   fontSize: '0.9rem',
   cursor: 'pointer',
+  boxSizing: 'border-box'
 };
 
 const imageGridStyle = {

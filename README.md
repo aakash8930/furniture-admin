@@ -41,3 +41,6 @@ updated the UI
 
 - v 1.0.9
 - Dashboard UI and Add/Edit Product Update 
+
+- v 1.1.0
+- Fix Something
