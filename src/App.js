@@ -12,6 +12,7 @@ import AdminOrders from './pages/Orders';
 import AdminOrderDetails from './pages/OrderDetails';
 import UsersPage from './pages/Users';
 import AdminProductDetails from './pages/ProductDetails';
+import './css/ConfirmationModal.css'; 
 
 export default function App() {
   return (

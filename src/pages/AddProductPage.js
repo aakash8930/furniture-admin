@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createProduct } from '../api/ProductApi';
 import AdminNavbar from './Navbar';
-<<<<<<< HEAD
+import '../css/AddProductPage.css'; // Import the new CSS file
 
 // This map is needed for the dynamic sub-category dropdown
 const SUBCATEGORY_MAP = {
@@ -18,9 +18,6 @@ const SUBCATEGORY_MAP = {
 };
 
 const COLOR_OPTIONS = ['Brown', 'Beige', 'Black', 'White'];
-=======
-import '../css/AddProductPage.css'; // Import the new CSS file
->>>>>>> ad4662a73243429efa03b2904789156a90c37d8b
 
 const CATEGORY_OPTIONS = [
   "SALE", "BEDROOM", "LIVING ROOM",
@@ -39,18 +36,18 @@ const AddProductPage = () => {
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    
+
     if (name === 'category') {
-        setForm(prev => ({
-            ...prev,
-            category: value,
-            subCategory: ''
-        }));
+      setForm(prev => ({
+        ...prev,
+        category: value,
+        subCategory: ''
+      }));
     } else {
-        setForm(prev => ({
-            ...prev,
-            [name]: files ? files[0] : value
-        }));
+      setForm(prev => ({
+        ...prev,
+        [name]: files ? files[0] : value
+      }));
     }
   };
 
@@ -64,7 +61,7 @@ const AddProductPage = () => {
       alert(err.response?.data?.message || "Failed to add product");
     }
   };
-  
+
   const currentSubCategories = SUBCATEGORY_MAP[form.category] || [];
 
   return (
@@ -97,7 +94,7 @@ const AddProductPage = () => {
                 ))}
               </select>
             </div>
-            
+
             <div style={{ gridColumn: 'span 2' }}>
               <label style={labelStyle}>Color / Finish</label>
               <select name="color" value={form.color} onChange={handleChange} style={inputStyle}>

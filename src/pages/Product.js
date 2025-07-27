@@ -8,6 +8,7 @@ import {
 } from '../api/ProductApi';
 import AdminNavbar from '../pages/Navbar.js';
 import '../css/Product.css'; // Ensure this path is correct
+import ConfirmationModal from './ConfirmationModal';
 
 // A simple trash icon component
 const TrashIcon = () => (
@@ -34,41 +35,57 @@ const ProductPage = () => {
   const [query, setQuery] = useState('');
   const navigate = useNavigate();
 
-  // --- Load all products on initial render ---
+  // --- 2. Add state to manage the modal ---
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [productToDelete, setProductToDelete] = useState(null);
+
+  const loadProducts = async () => {
+    try {
+      const data = await fetchAllProducts();
+      setProducts(data);
+    } catch (err) {
+      console.error('Failed to load products', err);
+    }
+  };
+
   useEffect(() => {
-    const loadProducts = async () => {
-      try {
-        const data = await fetchAllProducts();
-        setProducts(data);
-      } catch (err) {
-        console.error('Failed to load products', err);
-      }
-    };
     loadProducts();
   }, []);
 
-  // --- Filter products based on search query ---
   const filtered = products.filter(
     p =>
       (p.name && p.name.toLowerCase().includes(query.toLowerCase())) ||
       (p.category && p.category.toLowerCase().includes(query.toLowerCase()))
   );
 
-  // --- API Handlers ---
-  const handleDelete = async id => {
-    if (!window.confirm('Are you sure you want to delete this product?')) return;
+  // --- 3. Refactor delete logic to use the modal ---
+  const openDeleteModal = (product) => {
+    setProductToDelete(product);
+    setIsModalOpen(true);
+  };
+
+  const closeDeleteModal = () => {
+    setProductToDelete(null);
+    setIsModalOpen(false);
+  };
+
+  const confirmDelete = async () => {
+    if (!productToDelete) return;
+
     try {
-      await apiDeleteProduct(id);
-      setProducts(products.filter(p => p._id !== id));
+      await apiDeleteProduct(productToDelete._id);
+      setProducts(products.filter(p => p._id !== productToDelete._id));
+      closeDeleteModal();
     } catch (err) {
       console.error('Delete failed', err);
+      alert('Failed to delete product.');
+      closeDeleteModal();
     }
   };
 
   const handleEdit = id => {
     navigate(`/admin/products/edit/${id}`);
   };
-
   return (
     <>
       <AdminNavbar />
@@ -124,8 +141,9 @@ const ProductPage = () => {
                   >
                     Edit
                   </button>
+                  {/* 4. Update the button to open the modal */}
                   <button
-                    onClick={() => handleDelete(p._id)}
+                    onClick={() => openDeleteModal(p)}
                     className="btn btn-delete"
                   >
                     <TrashIcon />
@@ -144,6 +162,18 @@ const ProductPage = () => {
           {filtered.length === 0 && <p>No products found.</p>}
         </div>
       </div>
+
+      {/* 5. Add the modal component to your page */}
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        onClose={closeDeleteModal}
+        onConfirm={confirmDelete}
+        title="Confirm Product Deletion"
+      >
+        <p>Are you sure you want to permanently delete the product:</p>
+        <p><strong>{productToDelete?.name}</strong></p>
+        <p>This action cannot be undone.</p>
+      </ConfirmationModal>
     </>
   );
 };

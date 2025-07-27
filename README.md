@@ -44,3 +44,6 @@ updated the UI
 
 - v 1.1.0
 - Fix Something
+
+- v 1.1.1
+-Product Page Deleting Product Confirmation Fix
