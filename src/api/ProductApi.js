@@ -1,7 +1,7 @@
 // src/api/ProductApi.js
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8000';
+const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
 const ADMIN_PRODUCTS_URL = `${BASE_URL}/api/products`;
 
 // Fetch all products (admin)

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Base URL for your backend
-const BASE_URL ='http://localhost:8000';
+const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
 
 /**
  * Attempt to log in as admin

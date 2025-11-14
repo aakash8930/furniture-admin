@@ -3,7 +3,7 @@
 import axios from 'axios';
 
 // Base backend URL (adjust if using an environment variable)
-const BASE_URL = 'http://localhost:8000';
+const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
 
 /**
  * Fetch all orders (admin only).
