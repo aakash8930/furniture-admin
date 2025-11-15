@@ -1,12 +1,13 @@
 // webpack.config.js
+const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'main.js',
+    path: path.resolve(__dirname, 'dist'), // <-- This is the folder name!
+    //filename: 'main.js',
     publicPath: '/'
   },
   resolve: {
@@ -30,10 +31,14 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.REACT_APP_API_URL': JSON.stringify(process.env.REACT_APP_API_URL)
+    }),
     new HtmlWebpackPlugin({
       template: './public/index.html'
     })
   ],
+
   devServer: {
     historyApiFallback: true,
     static: {
