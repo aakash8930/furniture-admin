@@ -6,7 +6,7 @@ import axios from "axios";
 
 import { fetchProductById } from "../api/ProductApi";
 import AdminNavbar from "./Navbar";
-import ReviewList from "./ReviewList";
+import ReviewList from "./ReviewList.js";
 
 import "../css/ProductDetails.css";
 
