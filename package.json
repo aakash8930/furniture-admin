@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack serve --mode development --open",
     "dev": "set NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
-    "build": "webpack --mode production",
+    "build": "chmod +x ./node_modules/.bin/webpack && webpack --mode production",
     "test": "echo \"No tests specified\" && exit 0"
   },
   "keywords": [
